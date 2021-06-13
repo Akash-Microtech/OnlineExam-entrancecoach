@@ -1,0 +1,37 @@
+﻿@model IEnumerable<OnlineExam.Models.UserRole>
+
+@{
+    ViewBag.Title = "RoleList";
+}
+
+<h2>RoleList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateRole")
+</p>
+<table class="table">
+    <tr>
+        <th>Sl.No</th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </th>
+        <th>Action</th>
+    </tr>
+@{
+    int counter = 1;
+}
+@foreach (var item in Model) {
+    int sl = counter++;
+    <tr>
+        <td>@sl</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoleName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "CreateRole", new { id=item.RoleId }) |
+            @Html.ActionLink("Delete", "DeleteRole", new { id=item.RoleId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -97,6 +97,12 @@ namespace OnlineExam.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            Random random = new Random();
+            int unique = random.Next(10000, 99999);
+            string alpha = "ECS";
+            int ym = DateTime.Now.Year + DateTime.Now.Month;
+            var userId = alpha + ym + unique;
+
             var user = new User
             {
                 UserName = model.UserName,
@@ -104,11 +110,12 @@ namespace OnlineExam.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Password = model.Password,
+                UserId = userId,
                 CreatedDate = DateTime.Now,
                 RoleId = model.RoleId
             };
 
-            var data = db.Users.Where(d => d.Email == user.Email || d.UserName == user.UserName).FirstOrDefault();
+            var data = db.Users.Where(d => d.Email == user.Email || d.UserName == user.UserName || d.UserId == userId).FirstOrDefault();
 
             if(data != null)
             {
